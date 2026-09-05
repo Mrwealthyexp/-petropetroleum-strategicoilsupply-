@@ -1,0 +1,27 @@
+[[edge_functions]]
+  path = "/api/personalize"
+  function = "personalize"
+
+[[edge_functions]]
+  path = "/api/oil-data"
+  function = "oil-data"
+
+[[edge_functions]]
+  path = "/api/spr-data"
+  function = "spr-data"
+
+[[edge_functions]]
+  path = "/api/supply-routes"
+  function = "supply-routes"
+
+[[edge_functions]]
+  path = "/api/geopolitical-risk"
+  function = "geopolitical-risk"
+
+[[edge_functions]]
+  path = "/api/ai-copilot"
+  function = "ai-copilot"
+
+[[edge_functions]]
+  path = "/api/scenarios"
+  function = "scenarios"
