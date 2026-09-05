@@ -1,60 +1,59 @@
-'use client';
+import Link from "next/link";
+import { ArrowRight, Globe, TrendingUp, Shield } from "lucide-react";
 
-import Link from 'next/link';
-
-export default function Home() {
+export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-dark to-darker flex items-center justify-center">
-      <div className="text-center space-y-8 px-4">
-        <div className="space-y-4">
-          <h1 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400">
-            PetroPulse
-          </h1>
-          <p className="text-xl text-gray-300">
-            Strategic Oil Intelligence Platform
-          </p>
-        </div>
-
-        <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-          Real-time market analysis, global supply chain monitoring, and geopolitical risk assessment powered by AI
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-8">
-          <div className="bg-slate-900/50 border border-blue-500/30 rounded-lg p-6 hover:border-blue-500/80 transition">
-            <h3 className="text-lg font-semibold mb-2">📊 Dashboard</h3>
-            <p className="text-gray-400 text-sm">Live price tickers and market insights</p>
+    <div className="min-h-screen bg-[#050505] text-white flex flex-col">
+      <header className="flex items-center justify-between px-6 py-4 border-b border-[#222]">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-[#ff6b00] rounded-lg flex items-center justify-center">
+            <TrendingUp className="w-5 h-5 text-black" />
           </div>
-          <div className="bg-slate-900/50 border border-cyan-500/30 rounded-lg p-6 hover:border-cyan-500/80 transition">
-            <h3 className="text-lg font-semibold mb-2">🌍 Global Globe</h3>
-            <p className="text-gray-400 text-sm">3D visualization of supply routes</p>
+          <span className="text-lg font-bold tracking-tight">PETRO<span className="text-[#ff6b00]">PULSE</span></span>
+        </div>
+        <div className="text-xs text-gray-500">Strategic Oil Intelligence</div>
+      </header>
+      <main className="flex-1 flex flex-col items-center justify-center px-6 text-center">
+        <div className="max-w-2xl space-y-8">
+          <div className="space-y-4">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+              Global Energy<span className="block text-[#ff6b00]">Intelligence</span>
+            </h1>
+            <p className="text-lg text-gray-400 max-w-lg mx-auto">
+              Real-time monitoring of strategic petroleum reserves, supply routes, geopolitical risks, and market dynamics.
+            </p>
           </div>
-          <div className="bg-slate-900/50 border border-teal-500/30 rounded-lg p-6 hover:border-teal-500/80 transition">
-            <h3 className="text-lg font-semibold mb-2">🎮 Scenarios</h3>
-            <p className="text-gray-400 text-sm">Simulate market disruptions</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/dashboard" className="flex items-center justify-center gap-2 px-8 py-4 bg-[#ff6b00] text-black font-bold rounded-xl hover:bg-[#ff8533] transition-all">
+              Enter Platform<ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link href="/globe" className="flex items-center justify-center gap-2 px-8 py-4 bg-[#1a1a1a] text-white border border-[#333] rounded-xl hover:border-[#ff6b00]/50 transition-all">
+              <Globe className="w-5 h-5" />3D Globe
+            </Link>
+          </div>
+          <div className="grid grid-cols-3 gap-6 pt-8">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-[#ff6b00] font-mono">657M</div>
+              <div className="text-xs text-gray-500 mt-1">Barrels Tracked</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-[#4a90d9] font-mono">4</div>
+              <div className="text-xs text-gray-500 mt-1">SPR Facilities</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-[#22c55e] font-mono">24/7</div>
+              <div className="text-xs text-gray-500 mt-1">Live Monitoring</div>
+            </div>
           </div>
         </div>
-
-        <div className="flex gap-4 justify-center flex-wrap">
-          <Link
-            href="/dashboard"
-            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition"
-          >
-            View Dashboard
-          </Link>
-          <Link
-            href="/globe"
-            className="px-8 py-3 bg-gradient-to-r from-cyan-600 to-teal-600 rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition"
-          >
-            Explore Globe
-          </Link>
-          <Link
-            href="/scenarios"
-            className="px-8 py-3 border border-gray-500 rounded-lg font-semibold hover:border-gray-300 transition"
-          >
-            Run Scenarios
-          </Link>
+      </main>
+      <footer className="px-6 py-4 border-t border-[#222] text-center text-xs text-gray-600">
+        <div className="flex items-center justify-center gap-4">
+          <Shield className="w-3 h-3" />
+          <span>Secured by Web3 Technology</span>
+          <span className="text-[#ff6b00]">global energy.strategicoilsupply</span>
         </div>
-      </div>
-    </main>
+      </footer>
+    </div>
   );
 }
