@@ -1,23 +1,17 @@
-import type { Metadata } from 'next';
-import { ReactNode } from 'react';
-import './globals.css';
+import type { Metadata } from "next";
+import "./globals.css";
+import { QueryProvider } from "./components/providers/QueryProvider";
 
 export const metadata: Metadata = {
-  title: 'PetroPulse - Strategic Oil Intelligence',
-  description: 'Real-time oil market analysis, supply chain monitoring, and geopolitical risk assessment',
+  title: "PetroPulse | Strategic Oil Intelligence",
+  description: "Real-time strategic petroleum reserve monitoring, supply route tracking, and geopolitical risk assessment.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="bg-darker text-white">
-        <div className="min-h-screen">
-          {children}
-        </div>
+    <html lang="en" className="dark">
+      <body className="font-sans bg-[#050505] text-white antialiased">
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );

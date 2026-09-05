@@ -1,55 +1,41 @@
-'use client';
-
-import { Suspense } from 'react';
-import Skeleton from '@/components/shared/Skeleton';
-
-const DashboardLoading = () => (
-  <div className="space-y-4">
-    <Skeleton className="h-48 w-full" />
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <Skeleton className="h-48" />
-      <Skeleton className="h-48" />
-    </div>
-  </div>
-);
+import { Suspense } from "react";
+import { PriceTicker } from "@/app/components/dashboard/PriceTicker";
+import { SPRCard } from "@/app/components/dashboard/SPRCard";
+import { SupplyRoutesCard } from "@/app/components/dashboard/SupplyRoutesCard";
+import { RiskCard } from "@/app/components/dashboard/RiskCard";
+import { DashboardSkeleton } from "@/app/components/shared/Skeleton";
+import { ErrorBoundary } from "@/app/components/shared/ErrorBoundary";
+import { CopilotChat } from "@/app/components/copilot/CopilotChat";
+import { Globe, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardPage() {
   return (
-    <main className="min-h-screen bg-dark p-8">
-      <div className="max-w-7xl mx-auto space-y-8">
-        <header>
-          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
-            Oil Market Dashboard
-          </h1>
-          <p className="text-gray-400 mt-2">Real-time market data and analysis</p>
-        </header>
-
-        <Suspense fallback={<DashboardLoading />}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Placeholder cards - replace with real components */}
-            <div className="bg-slate-900/50 border border-blue-500/20 rounded-lg p-6">
-              <h3 className="text-sm text-gray-400 mb-2">WTI Crude Price</h3>
-              <p className="text-3xl font-bold">$82.45</p>
-              <p className="text-sm text-green-400 mt-1">+2.3% today</p>
-            </div>
-            <div className="bg-slate-900/50 border border-cyan-500/20 rounded-lg p-6">
-              <h3 className="text-sm text-gray-400 mb-2">Brent Crude</h3>
-              <p className="text-3xl font-bold">$87.20</p>
-              <p className="text-sm text-green-400 mt-1">+1.8% today</p>
-            </div>
-            <div className="bg-slate-900/50 border border-teal-500/20 rounded-lg p-6">
-              <h3 className="text-sm text-gray-400 mb-2">SPR Level</h3>
-              <p className="text-3xl font-bold">362.8M</p>
-              <p className="text-sm text-yellow-400 mt-1">-1.2% week</p>
-            </div>
-            <div className="bg-slate-900/50 border border-purple-500/20 rounded-lg p-6">
-              <h3 className="text-sm text-gray-400 mb-2">Risk Index</h3>
-              <p className="text-3xl font-bold">6.2/10</p>
-              <p className="text-sm text-orange-400 mt-1">Moderate</p>
-            </div>
+    <div className="min-h-screen bg-[#050505] text-white p-6">
+      <header className="mb-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">PETRO<span className="text-[#ff6b00]">PULSE</span></h1>
+            <p className="text-sm text-gray-500 mt-1">Strategic Oil Intelligence Platform</p>
           </div>
-        </Suspense>
+          <div className="flex items-center gap-4">
+            <Link href="/globe" className="flex items-center gap-2 px-4 py-2 bg-[#ff6b00] text-black font-semibold rounded-lg hover:bg-[#ff8533] transition-colors"><Globe className="w-4 h-4" />3D Globe<ArrowRight className="w-4 h-4" /></Link>
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-[#1a1a1a] rounded-full"><div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" /><span className="text-xs text-gray-400">Live</span></div>
+            <div className="text-xs text-gray-500 font-mono">{new Date().toUTCString()}</div>
+          </div>
+        </div>
+      </header>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-min">
+        <div className="lg:col-span-2"><ErrorBoundary><Suspense fallback={<DashboardSkeleton />}><PriceTicker /></Suspense></ErrorBoundary></div>
+        <div className="lg:col-span-2 lg:row-span-2"><ErrorBoundary><Suspense fallback={<DashboardSkeleton />}><SPRCard /></Suspense></ErrorBoundary></div>
+        <div className="lg:col-span-2"><ErrorBoundary><Suspense fallback={<DashboardSkeleton />}><SupplyRoutesCard /></Suspense></ErrorBoundary></div>
+        <div className="lg:col-span-2"><ErrorBoundary><Suspense fallback={<DashboardSkeleton />}><RiskCard /></Suspense></ErrorBoundary></div>
+        <div className="lg:col-span-2 bg-[#0f0f0f] border border-[#222] rounded-xl p-6 flex items-center justify-between hover:border-[#ff6b00]/30 transition-all cursor-pointer">
+          <div><h3 className="text-sm font-semibold text-white mb-1">Scenario Engine</h3><p className="text-xs text-gray-500">Monte Carlo simulation with interactive parameters</p></div>
+          <Link href="/scenarios" className="flex items-center gap-2 text-[#ff6b00] hover:text-[#ff8533] transition-colors"><span className="text-sm">Open</span><ArrowRight className="w-4 h-4" /></Link>
+        </div>
       </div>
-    </main>
+      <CopilotChat />
+    </div>
   );
 }
