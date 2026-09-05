@@ -1,13 +1,41 @@
 [build]
   command = "npm run build"
-  functions = "netlify/functions"
-  publish = ".next"
+  publish = "out"
 
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
+[build.environment]
+  NODE_VERSION = "20"
 
-[[edge_functions]]
-  path = "/api/*"
-  function = "edge-functions"
+# Environment variables required by the app at build time.
+# Set the actual values in the Netlify UI (Site settings > Environment
+# variables) or via `netlify env:set`; do not commit real secrets here.
+# See .env.local.example for the full list of variables used by the app:
+#   NEXT_PUBLIC_OIL_API_KEY
+#   NEXT_PUBLIC_OIL_API_URL
+#   NEXT_PUBLIC_RISK_API_KEY
+#   NEXT_PUBLIC_RISK_API_URL
+#   NEXT_PUBLIC_COPILOT_API_KEY
+#   NEXT_PUBLIC_COPILOT_MODEL
+#   NEXT_PUBLIC_APP_NAME
+#   NEXT_PUBLIC_APP_VERSION
+
+# Note: no catch-all redirect is defined here. Every page is fully
+# pre-rendered as its own static HTML file by `output: 'export'`, so
+# Netlify serves each one directly and automatically falls back to the
+# bundled `out/404.html` for any unmatched path — no explicit redirect
+# rule is required for this statically exported app.
+
+# Long-term caching for Next.js hashed static assets.
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Security headers applied to every response.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-XSS-Protection = "1; mode=block"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
