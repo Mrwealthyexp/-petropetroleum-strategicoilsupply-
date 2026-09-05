@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export type Coordinates = { latitude: number; longitude: number };
 
@@ -34,10 +34,6 @@ export function usePersonalization(): Personalization {
       },
       { enableHighAccuracy: false, maximumAge: 300_000, timeout: 10_000 },
     );
-  }, []);
-
-  useEffect(() => {
-    if (typeof Intl !== "undefined") Intl.DateTimeFormat().resolvedOptions();
   }, []);
 
   return {
