@@ -33,13 +33,12 @@ A comprehensive Next.js application for real-time oil market analysis, supply ch
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14 (App Router) + React 18
+- **Frontend**: Next.js 15 (App Router) + React 18
 - **Styling**: Tailwind CSS + PostCSS
 - **State Management**: Zustand + React Query
 - **3D Graphics**: Three.js + three-stdlib
-- **Backend**: Netlify Edge Functions
 - **Language**: TypeScript
-- **Deployment**: Netlify
+- **Deployment**: Netlify (static export)
 
 ## Project Structure
 
@@ -62,17 +61,12 @@ app/
 ├── globe/                # Globe page
 ├── scenarios/            # Scenarios page
 └── layout.tsx            # Root layout
-
-netlify/
-├── edge-functions/       # 7 API endpoints
-├── lib/                  # Edge utilities
-└── functions/            # Serverless functions
 ```
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 20 (see `.nvmrc`)
 - npm or yarn
 
 ### Installation
@@ -94,25 +88,52 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Build & Deploy
 
 ```bash
-# Build for production
+# Build the static site (outputs to out/)
 npm run build
 
-# Start production server
-npm start
-
-# Deploy to Netlify
-netlify deploy --prod
+# Preview the static build locally
+npx serve out
 ```
 
-## API Endpoints (Netlify Edge Functions)
+This project uses Next.js static export (`output: 'export'` in `next.config.ts`), so `npm run build` generates a fully static site in the `out/` directory. There is no Node.js server to start in production — the `out/` folder is deployed as-is to any static host.
 
-- `GET /api/oil-data` - Current oil prices (WTI, Brent)
-- `GET /api/spr-data` - Strategic Petroleum Reserve data
-- `GET /api/supply-routes` - Active supply routes and tanker tracking
-- `GET /api/geopolitical-risk` - Regional risk assessments
-- `POST /api/scenarios` - Run scenario simulations
-- `POST /api/ai-copilot` - AI market intelligence
-- `GET /api/personalize` - User preference personalization
+## Deployment (Netlify)
+
+PetroPulse is configured for automatic deployment to Netlify via `netlify.toml`:
+
+| Setting            | Value           |
+| ------------------ | --------------- |
+| Build command      | `npm run build` |
+| Publish directory  | `out`           |
+| Node version       | `20`            |
+
+### Auto-deploy workflow
+
+1. Connect this repository to a Netlify site (**Site settings → Build & deploy → Link repository**).
+2. Netlify reads `netlify.toml` automatically and applies the build command, publish directory, and `NODE_VERSION` above.
+3. Push to the `main` branch on GitHub.
+4. Netlify detects the push, runs `npm run build`, and publishes the generated `out/` directory.
+5. Deploy previews are created automatically for pull requests.
+
+### Manual deploy
+
+```bash
+# One-off production deploy from your machine
+netlify deploy --prod --dir=out
+```
+
+### Environment variables on Netlify
+
+The app reads `NEXT_PUBLIC_*` variables at build time (see `.env.local.example`). Set the real values in **Site settings → Environment variables** in the Netlify UI, or with the CLI:
+
+```bash
+netlify env:set NEXT_PUBLIC_OIL_API_KEY your_api_key
+netlify env:set NEXT_PUBLIC_OIL_API_URL https://api.example.com
+netlify env:set NEXT_PUBLIC_COPILOT_API_KEY your_api_key
+netlify env:set NEXT_PUBLIC_COPILOT_MODEL gpt-4
+```
+
+Never commit real API keys or secrets to `netlify.toml` or the repository; only placeholder/example values belong in source control.
 
 ## Configuration
 
@@ -136,8 +157,8 @@ Custom theme configuration in `tailwind.config.ts`:
 
 - **React Query**: Automatic caching and background updates
 - **Zustand**: Lightweight state management
-- **Next.js Image Optimization**: Automatic image optimization
-- **Edge Functions**: Globally distributed edge computing
+- **Static Export**: Pre-rendered HTML served directly from Netlify's CDN
+- **Cache-Control headers**: Long-term caching for hashed Next.js assets (see `netlify.toml`)
 
 ## Browser Support
 
