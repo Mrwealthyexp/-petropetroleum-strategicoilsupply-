@@ -135,6 +135,10 @@ netlify env:set NEXT_PUBLIC_COPILOT_MODEL gpt-4
 
 Never commit real API keys or secrets to `netlify.toml` or the repository; only placeholder/example values belong in source control.
 
+### Dependency notes
+
+`package.json` pins `postcss` in both `devDependencies` and `overrides` to the same patched version (currently `^8.5.28`). The `overrides` entry is required because Next.js bundles its own internal `postcss` dependency, which otherwise resolves to an older, vulnerable version regardless of what's declared in `devDependencies`. When bumping `postcss`, update both entries together to keep them in sync.
+
 ## Configuration
 
 ### Environment Variables
