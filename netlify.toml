@@ -1,13 +1,6 @@
 [build]
   command = "npm run build"
-  functions = "netlify/functions"
-  publish = ".next"
+  publish = "out"
 
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
-
-[[edge_functions]]
-  path = "/api/*"
-  function = "edge-functions"
+[build.environment]
+  NEXT_TELEMETRY_DISABLED = "1"
