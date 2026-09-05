@@ -18,11 +18,11 @@
 #   NEXT_PUBLIC_APP_NAME
 #   NEXT_PUBLIC_APP_VERSION
 
-# Note: no catch-all redirect is defined here. Every route (/, /dashboard,
-# /globe, /scenarios) is fully pre-rendered as its own static HTML file by
-# `output: 'export'`, so Netlify serves each one directly and automatically
-# falls back to the bundled `out/404.html` for any unmatched path — no
-# explicit redirect rule is required for this statically exported app.
+# Note: no catch-all redirect is defined here. Every page is fully
+# pre-rendered as its own static HTML file by `output: 'export'`, so
+# Netlify serves each one directly and automatically falls back to the
+# bundled `out/404.html` for any unmatched path — no explicit redirect
+# rule is required for this statically exported app.
 
 # Long-term caching for Next.js hashed static assets.
 [[headers]]
