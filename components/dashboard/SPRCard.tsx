@@ -12,6 +12,9 @@ export interface SPRFacility {
   currentMillionBarrels: number;
 }
 
+// TODO: replace with a real API call. This placeholder never rejects, so the
+// isError/error handling in SPRCardContent below is currently unreachable —
+// validate it once a real data source (which can fail) is wired in.
 async function fetchSPRFacilities(): Promise<SPRFacility[]> {
   return [
     { id: "bryan-mound", name: "Bryan Mound", location: "Texas", capacityMillionBarrels: 254, currentMillionBarrels: 189 },

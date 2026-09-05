@@ -16,12 +16,20 @@ const DEFAULT_INPUTS: ScenarioInputs = {
 
 const BASE_PRICE = 82;
 
+// Coefficients for the simplified linear pricing model below. Tuned to give
+// intuitive, directionally-correct price moves for demo/simulation purposes
+// (not derived from a real econometric model).
+const DISRUPTION_IMPACT_FACTOR = 0.9; // $ per % of supply disrupted
+const DEMAND_IMPACT_FACTOR = 0.6; // $ per % of demand growth
+const SPR_RELIEF_FACTOR = 4; // $ reduction per Mbpd of SPR released
+const MIN_PROJECTED_PRICE = 20; // floor to avoid unrealistic/negative prices
+
 function computeProjectedPrice(inputs: ScenarioInputs): number {
-  const disruptionImpact = inputs.supplyDisruptionPct * 0.9;
-  const demandImpact = inputs.demandGrowthPct * 0.6;
-  const sprRelief = inputs.sprReleaseMbpd * 4;
+  const disruptionImpact = inputs.supplyDisruptionPct * DISRUPTION_IMPACT_FACTOR;
+  const demandImpact = inputs.demandGrowthPct * DEMAND_IMPACT_FACTOR;
+  const sprRelief = inputs.sprReleaseMbpd * SPR_RELIEF_FACTOR;
   const projected = BASE_PRICE + disruptionImpact + demandImpact - sprRelief;
-  return Math.max(20, Number(projected.toFixed(2)));
+  return Math.max(MIN_PROJECTED_PRICE, Number(projected.toFixed(2)));
 }
 
 interface SliderConfig {

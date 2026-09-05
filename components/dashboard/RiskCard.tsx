@@ -11,6 +11,9 @@ export interface RiskRegion {
   trend: "up" | "down" | "flat";
 }
 
+// TODO: replace with a real API call. This placeholder never rejects, so the
+// isError/error handling in RiskCardContent below is currently unreachable —
+// validate it once a real data source (which can fail) is wired in.
 async function fetchRiskScores(): Promise<RiskRegion[]> {
   return [
     { id: "middle-east", region: "Middle East", score: 78, trend: "up" },

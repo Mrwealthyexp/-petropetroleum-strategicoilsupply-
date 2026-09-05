@@ -12,6 +12,10 @@ export interface SupplyRoute {
   note?: string;
 }
 
+// TODO: replace with a real API call. This placeholder never rejects, so the
+// isError/error handling in SupplyRoutesCardContent below is currently
+// unreachable — validate it once a real data source (which can fail) is
+// wired in.
 async function fetchSupplyRoutes(): Promise<SupplyRoute[]> {
   return [
     { id: "hormuz", name: "Strait of Hormuz", status: "active", throughputMillionBpd: 21 },
