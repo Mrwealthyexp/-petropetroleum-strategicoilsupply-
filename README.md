@@ -33,7 +33,7 @@ A comprehensive Next.js application for real-time oil market analysis, supply ch
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14 (App Router) + React 18
+- **Frontend**: Next.js 15 (App Router) + React 18
 - **Styling**: Tailwind CSS + PostCSS
 - **State Management**: Zustand + React Query
 - **3D Graphics**: Three.js + three-stdlib
