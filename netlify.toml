@@ -18,8 +18,11 @@
 #   NEXT_PUBLIC_APP_NAME
 #   NEXT_PUBLIC_APP_VERSION
 
-# Fallback for unmatched routes so client-side navigation and deep links
-# resolve correctly for this statically exported single page app.
+# Custom 404 page for any route that doesn't match a pre-rendered static
+# page. Each route (/, /dashboard, /globe, /scenarios) is fully pre-rendered
+# by `output: 'export'`, so this only serves as a friendly fallback page —
+# it intentionally keeps the 404 status rather than rewriting to the
+# homepage, since these are genuinely missing routes.
 [[redirects]]
   from = "/*"
   to = "/404.html"
