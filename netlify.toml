@@ -18,15 +18,11 @@
 #   NEXT_PUBLIC_APP_NAME
 #   NEXT_PUBLIC_APP_VERSION
 
-# Custom 404 page for any route that doesn't match a pre-rendered static
-# page. Each route (/, /dashboard, /globe, /scenarios) is fully pre-rendered
-# by `output: 'export'`, so this only serves as a friendly fallback page —
-# it intentionally keeps the 404 status rather than rewriting to the
-# homepage, since these are genuinely missing routes.
-[[redirects]]
-  from = "/*"
-  to = "/404.html"
-  status = 404
+# Note: no catch-all redirect is defined here. Every route (/, /dashboard,
+# /globe, /scenarios) is fully pre-rendered as its own static HTML file by
+# `output: 'export'`, so Netlify serves each one directly and automatically
+# falls back to the bundled `out/404.html` for any unmatched path — no
+# explicit redirect rule is required for this statically exported app.
 
 # Long-term caching for Next.js hashed static assets.
 [[headers]]
