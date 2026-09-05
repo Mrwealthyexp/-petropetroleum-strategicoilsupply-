@@ -34,6 +34,15 @@ const initialState = {
   isHydrated: false,
 };
 
+const fallbackStorage: Storage = {
+  length: 0,
+  clear: () => undefined,
+  getItem: () => null,
+  key: () => null,
+  removeItem: () => undefined,
+  setItem: () => undefined,
+};
+
 export const useAppStore = create<AppState>()(
   persist(
     (set) => ({
@@ -61,7 +70,7 @@ export const useAppStore = create<AppState>()(
         favoriteRegions: state.favoriteRegions,
       }),
       storage: createJSONStorage(() =>
-        typeof window !== 'undefined' ? window.localStorage : undefined,
+        typeof window !== 'undefined' ? window.localStorage : fallbackStorage,
       ),
       onRehydrateStorage: () => (state) => {
         if (state) {

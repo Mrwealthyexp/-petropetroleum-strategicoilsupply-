@@ -11,14 +11,18 @@ import type {
 export const API_BASE_URL =
   process.env.NEXT_PUBLIC_OIL_API_URL ?? 'https://api.example.com/oil';
 
-const buildQueryString = (params?: Record<string, string | number | boolean | undefined>) => {
+type QueryParamValue = string | number | boolean | undefined | null;
+
+type QueryParams = Record<string, QueryParamValue> | Partial<MarketQueryParams>;
+
+const buildQueryString = (params?: QueryParams) => {
   if (!params) {
     return '';
   }
 
   const search = new URLSearchParams();
 
-  Object.entries(params).forEach(([key, value]) => {
+  Object.entries(params as Record<string, QueryParamValue>).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== '') {
       search.append(key, String(value));
     }
@@ -30,7 +34,7 @@ const buildQueryString = (params?: Record<string, string | number | boolean | un
 
 export async function fetchJson<T>(
   input: string,
-  init: RequestInit & { params?: Record<string, string | number | boolean | undefined> } = {},
+  init: RequestInit & { params?: QueryParams } = {},
 ): Promise<T> {
   const { params, ...requestInit } = init;
   const url = `${API_BASE_URL}${input}${buildQueryString(params)}`;
