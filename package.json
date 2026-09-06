@@ -26,6 +26,6 @@
     "typescript": "^5.2.0",
     "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",
-    "@types/three": "^r158"
+    "@types/three": "^0.170"
   }
 }
