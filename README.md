@@ -94,15 +94,28 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Build & Deploy
 
 ```bash
-# Build for production
+# Generate the static site in out/
 npm run build
 
-# Start production server
-npm start
-
-# Deploy to Netlify
+# Optional: deploy manually with the Netlify CLI
 netlify deploy --prod
 ```
+
+The project uses Next.js static export (`output: 'export'`). A successful build
+creates the deployable site in `out/`; `npm start` is not used for static
+hosting.
+
+#### Netlify auto-deploy
+
+1. Import the GitHub repository into Netlify.
+2. Set the production branch to `main`.
+3. Netlify reads `netlify.toml`, runs `npm run build`, and publishes `out/`.
+4. Every push to `main` triggers a new deployment. Pull requests can be enabled
+   as deploy previews in Netlify.
+
+No Netlify function or edge function is required by the current static app. If
+API endpoints are added later, add their source directory and routing to
+`netlify.toml` rather than publishing the Next.js `.next/` directory.
 
 ## API Endpoints (Netlify Edge Functions)
 
@@ -117,6 +130,16 @@ netlify deploy --prod
 ## Configuration
 
 ### Environment Variables
+
+Copy the example file before starting development:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Set the values locally in `.env.local` (never commit this file). Add the same
+variables in Netlify under **Site configuration → Environment variables** when
+the deployed app needs external APIs:
 
 ```env
 NEXT_PUBLIC_OIL_API_KEY=your_api_key
@@ -136,8 +159,7 @@ Custom theme configuration in `tailwind.config.ts`:
 
 - **React Query**: Automatic caching and background updates
 - **Zustand**: Lightweight state management
-- **Next.js Image Optimization**: Automatic image optimization
-- **Edge Functions**: Globally distributed edge computing
+- **Static export**: Pre-rendered assets served directly by Netlify
 
 ## Browser Support
 
@@ -153,3 +175,14 @@ MIT License - see LICENSE file for details
 ## Support
 
 For issues or questions, please open an issue on GitHub.
+
+## Troubleshooting
+
+- **`npm run build` fails before compiling:** remove `node_modules` and
+  `package-lock.json`, run `npm install`, and retry.
+- **Netlify deploys no files:** confirm the publish directory is `out` and the
+  build command is `npm run build`; do not use `.next`.
+- **API requests fail after deployment:** configure the required environment
+  variables in Netlify and verify that the configured API allows browser
+  requests. Static export does not provide a server runtime for Next.js API
+  routes.
